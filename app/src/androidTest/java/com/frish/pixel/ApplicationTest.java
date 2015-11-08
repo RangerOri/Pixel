@@ -1,4 +1,4 @@
-package com.github.hiroyuki_komatsu.pixel;
+package com.github.frish.pixel;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

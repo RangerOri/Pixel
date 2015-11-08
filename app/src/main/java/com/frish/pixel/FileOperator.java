@@ -1,23 +1,24 @@
-package com.github.hiroyuki_komatsu.pixel;
+package com.frish.pixel;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
 
+import com.frish.pixel.Model.PixelDataConverter;
+import com.frish.pixel.Model.PixelMatrix;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 
 /**
  * Created by komatsu on 5/6/15.
  */
 public class FileOperator {
-    static final String PIXEL_DIR = "Pixel";
+    static final String PIXEL_DIR = "PixelMatrix";
 
-    public static boolean savePng(Activity activity, String fileName, PixelData pixelData) {
+    public static boolean savePng(Activity activity, String fileName, PixelMatrix pixelMatrix) {
         boolean result;
 
         String filePath =
@@ -31,7 +32,7 @@ public class FileOperator {
         try {
             fos = new FileOutputStream(file, true);
             //fos = activity.openFileOutput(fileName, Context.MODE_PRIVATE);
-            result = PixelDataConverter.compressToPng(pixelData, fos);
+            result = PixelDataConverter.compressToPng(pixelMatrix, fos);
             fos.close();
 
             /*

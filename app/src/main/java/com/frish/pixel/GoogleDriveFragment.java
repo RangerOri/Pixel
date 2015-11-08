@@ -1,8 +1,7 @@
-package com.github.hiroyuki_komatsu.pixel;
+package com.frish.pixel;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
