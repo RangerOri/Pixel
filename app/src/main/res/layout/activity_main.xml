@@ -1,49 +1,44 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    tools:context=".MainActivity">
 
-    <com.github.hiroyuki_komatsu.pixel.PixelView
-        android:id="@+id/PixelView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <include
+        layout="@layout/toolbar_layout"
+        android:id="@+id/toolBar"
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         />
 
-    <Button
-        android:id="@+id/setButton"
-        android:onClick="onSetButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/set"
-        android:layout_below="@+id/PixelView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
-    <Button
-        android:id="@+id/saveButton"
-        android:onClick="onSaveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/save" />
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/frameLayout"
+        android:layout_below="@+id/toolBar"
+        android:layout_above="@+id/bottomToolbar"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
 
-    <Button
-        android:id="@+id/saveDriveButton"
-        android:onClick="onSaveButtonWithDrive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <com.frish.pixel.UI.PixelView
+            android:id="@+id/PixelView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <include
+        layout="@layout/bottom_toolbar_layout"
+        android:id="@+id/bottomToolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
         android:layout_gravity="center"
-        android:text="@string/saveDrive"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/saveButton"
-        android:layout_toStartOf="@+id/saveButton" />
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>

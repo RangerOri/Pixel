@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/prevButton"
+        android:layout_weight="1"
+        android:onClick="onPreviewButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/preview" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_weight="1"
+        android:onClick="onSaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/save" />
+
+    <Button
+        android:id="@+id/saveDriveButton"
+        android:onClick="onSaveButtonWithDrive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/saveDrive"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/shareButton"
+        android:onClick="onSaveButtonWithDrive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/share"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/clearButton"
+        android:onClick="onClearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/clear"
+        android:layout_weight="1"/>
+</LinearLayout>

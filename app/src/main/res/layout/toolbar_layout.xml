@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/btnNew"
+        android:layout_weight="1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/new_file"
+        android:contentDescription="@string/new_file"
+        android:textSize="35sp"
+        android:scaleType="centerCrop"
+        android:onClick="onNewCanvasButton"/>
+
+    <ImageButton
+        android:id="@+id/btnUndo"
+        android:layout_weight="1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/undo"
+        android:contentDescription="@string/undo"
+        android:textSize="35sp"/>
+
+    <ImageButton
+        android:id="@+id/btnRedo"
+        android:layout_weight="1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/redo"
+        android:contentDescription="@string/redo"
+        android:textSize="35sp"/>
+
+    <ImageButton
+        android:id="@+id/btnZoom"
+        android:layout_weight="1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:contentDescription="@string/zoom"
+        android:src="@drawable/zoom" />
+
+    <ImageButton
+        android:id="@+id/btnPaint"
+        android:layout_weight="1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/paint"
+        android:contentDescription="@string/paint"
+        android:onClick="onColorPick"/>
+
+    <ImageButton
+        android:id="@+id/btnFill"
+        android:layout_weight="1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:contentDescription="@string/fill"
+        android:src="@drawable/fill"
+        android:onClick="onColorPick"/>
+
+</LinearLayout>

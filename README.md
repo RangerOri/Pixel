@@ -1,5 +1,5 @@
 # ![icon](images/icon.png) Pixel
-Prototype of pixel editor for Android.  Not ready for daily use.
+Prototype of pixelMatrix editor for Android.  Not ready for daily use.
 
 <img src="images/screenshot.png" width="240" />
 

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="100dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Width (Pixels):"
+        android:id="@+id/textView"
+        android:textSize="20sp"
+        android:layout_alignTop="@+id/editWidthPixels"
+        android:layout_toLeftOf="@+id/editWidthPixels"
+        android:layout_toStartOf="@+id/editWidthPixels" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Height (Pixels):"
+        android:textSize="20sp"
+        android:id="@+id/textView2"
+        android:layout_alignTop="@+id/editHeightPixels"
+        android:layout_toLeftOf="@+id/editHeightPixels"
+        android:layout_toStartOf="@+id/editHeightPixels" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editWidthPixels"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="46dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editHeightPixels"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/editWidthPixels"
+        android:layout_alignLeft="@+id/editWidthPixels"
+        android:layout_alignStart="@+id/editWidthPixels" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        android:id="@+id/createNewBtn"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancelNewBtn"
+        android:layout_alignTop="@+id/createNewBtn"
+        android:layout_alignRight="@+id/editHeightPixels"
+        android:layout_alignEnd="@+id/editHeightPixels"
+        android:layout_marginRight="57dp"
+        android:layout_marginEnd="57dp" />
+
+</RelativeLayout>
