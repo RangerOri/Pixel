@@ -42,7 +42,7 @@ public class FileOperator {
             writer.close();
             */
         } catch (IOException e) {
-            e.printStackTrace();
+            LogData.print(e);
             return false;
         }
         return result;
@@ -60,7 +60,7 @@ public class FileOperator {
             writer.close();
             */
         } catch (IOException e) {
-            e.printStackTrace();
+            LogData.print(e);
             return false;
         }
         return true;

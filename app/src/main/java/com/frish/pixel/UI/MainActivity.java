@@ -3,15 +3,17 @@ package com.frish.pixel.UI;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.frish.pixel.FileOperator;
 import com.frish.pixel.GoogleDriveFragment;
+import com.frish.pixel.LogData;
 import com.frish.pixel.Model.PixelDataConverter;
 import com.frish.pixel.Model.PixelMatrix;
 import com.frish.pixel.R;
@@ -38,6 +41,8 @@ public class MainActivity extends Activity {
     private final String GOOGLE_DRIVE_TAG = "GoogleDrive";
     private final int PIXEL_ROWS = 32;
     private final int PIXEL_COLS = 32;
+    private final int BRUSH_TYPE_PAINT = 0;
+    private final int BRUSH_TYPE_FILL = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,18 +92,21 @@ public class MainActivity extends Activity {
             }
         };
 
-        (findViewById(R.id.btnPaint)).setOnTouchListener(listener);
+
         (findViewById(R.id.btnNew)).setOnTouchListener(listener);
         (findViewById(R.id.btnUndo)).setOnTouchListener(listener);
         (findViewById(R.id.btnRedo)).setOnTouchListener(listener);
         (findViewById(R.id.btnZoom)).setOnTouchListener(listener);
         (findViewById(R.id.btnFill)).setOnTouchListener(listener);
+        (findViewById(R.id.btnPaint)).setOnTouchListener(listener);
+
+        selectBrushType(BRUSH_TYPE_PAINT);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("MainActivity", "onActivityResult");
+        LogData.print("MainActivity", "onActivityResult");
         mGoogleDriveFragment.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -145,34 +153,56 @@ public class MainActivity extends Activity {
         try {
             baos.close();
         } catch (IOException e) {
-            Log.e(TAG, "Exception while starting resolution activity", e);
+            LogData.print(TAG, "Exception while starting resolution activity", e);
         }
         mGoogleDriveFragment.createFileActivity("data.png", baos.toByteArray(), "image/png");
     }
 
-    public void onColorPick(final View view){
-        int color = mPixelView.getBrushColor();
-        final ColorPicker cp = new ColorPicker(MainActivity.this,
-                Color.red(color), Color.green(color), Color.blue(color));
+    private void selectBrushType(int mode){
+        View paint = findViewById(R.id.btnPaint);
+        View fill = findViewById(R.id.btnFill);
 
-        if(view.getId() == R.id.btnPaint)
-            mPixelView.setBrushMode(0);
-        else if(view.getId() == R.id.btnFill)
-            mPixelView.setBrushMode(1);
+        if(mode == BRUSH_TYPE_PAINT){
+            paint.setBackgroundColor(Color.BLUE);
+            fill.setBackgroundColor(Color.WHITE);
+        } else if(mode == BRUSH_TYPE_FILL){
+            paint.setBackgroundColor(Color.WHITE);
+            fill.setBackgroundColor(Color.BLUE);
+        }
 
-        cp.show();
+        mPixelView.setBrushMode(mode);
+    }
 
-        Button okColor = (Button)cp.findViewById(R.id.okColorButton);
-        okColor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    public void onColorPick(final View view) {
 
-                /* Or the android RGB Color (see the android Color class reference) */
-                mPixelView.setBrushColor(cp.getColor());
-                view.setBackgroundColor(cp.getColor());
-                cp.dismiss();
-            }
-        });
+        if (view.getId() == R.id.btnPaint) {
+            selectBrushType(BRUSH_TYPE_PAINT);
+        } else if (view.getId() == R.id.btnFill) {
+            selectBrushType(BRUSH_TYPE_FILL);
+        } else if(view.getId() == R.id.btnSelector) {
+
+            int color = mPixelView.getBrushColor();
+            final ColorPicker cp = new ColorPicker(MainActivity.this,
+                    Color.red(color), Color.green(color), Color.blue(color));
+
+            cp.show();
+
+            getWindow().setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+            );
+
+            Button okColor = (Button)cp.findViewById(R.id.okColorButton);
+            okColor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    /* Or the android RGB Color (see the android Color class reference) */
+                    mPixelView.setBrushColor(cp.getColor());
+                    view.setBackgroundColor(cp.getColor());
+                    cp.dismiss();
+                }
+            });
+        }
     }
 
     public void openFromDrive() {

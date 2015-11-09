@@ -9,11 +9,11 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.frish.pixel.LogData;
 import com.frish.pixel.Model.FloodFill;
 import com.frish.pixel.Model.PixelDataConverter;
 import com.frish.pixel.Model.PixelMatrix;
@@ -83,7 +83,7 @@ public class PixelView extends View
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        Log.d("PixelMatrix Log", String.format("Screnn Width:%d, Screen Height:%d, Cell Width:%f, Cell Height:%f, " +
+        LogData.print("PixelMatrix Log", String.format("Screnn Width:%d, Screen Height:%d, Cell Width:%f, Cell Height:%f, " +
                         "Num Cells Columns:%d, Num Cells Rows:%d, View Width:%d, View Height:%d", displaymetrics.widthPixels, displaymetrics.heightPixels,
                 cellWidth, cellHeight, numColumns, numRows, width, height));
 
@@ -147,10 +147,10 @@ public class PixelView extends View
             mPixelMatrix.setPixelColor(row, column, brushColor);
         else if(brushMode == BRUSH_MODE.FILL){
             int pixelColor = mPixelMatrix.getPixelColor(row, column);
-            Bitmap img = PixelDataConverter.convertToBitmap(mPixelMatrix);
-            img = FloodFill.floodFill(img, new Point(column, row), pixelColor, brushColor);
-            //qlff.floodFill(row, column);
-            mPixelMatrix = PixelDataConverter.convertToPixelMatrix(/*qlff.getImage()*/img);
+            //Bitmap img = PixelDataConverter.convertToBitmap(mPixelMatrix);
+            int[][] pixels = FloodFill.floodFill(mPixelMatrix.getPixels(), mPixelMatrix.getColumns(),
+                    mPixelMatrix.getRows(), new Point(row, column), pixelColor, brushColor);
+            mPixelMatrix.setPixels(pixels);
         }
 
         invalidate();

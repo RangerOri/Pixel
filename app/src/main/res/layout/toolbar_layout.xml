@@ -13,7 +13,7 @@
         android:contentDescription="@string/new_file"
         android:textSize="35sp"
         android:scaleType="centerCrop"
-        android:onClick="onNewCanvasButton"/>
+        android:onClick="onNewCanvasButton" />
 
     <ImageButton
         android:id="@+id/btnUndo"
@@ -41,6 +41,8 @@
         android:contentDescription="@string/zoom"
         android:src="@drawable/zoom" />
 
+
+
     <ImageButton
         android:id="@+id/btnPaint"
         android:layout_weight="1"
@@ -48,7 +50,7 @@
         android:layout_height="75dp"
         android:src="@drawable/paint"
         android:contentDescription="@string/paint"
-        android:onClick="onColorPick"/>
+        android:onClick="onColorPick" />
 
     <ImageButton
         android:id="@+id/btnFill"
@@ -59,4 +61,13 @@
         android:src="@drawable/fill"
         android:onClick="onColorPick"/>
 
+
+    <ImageButton
+        android:id="@+id/btnSelector"
+        android:layout_weight="1"
+        android:layout_width="75dp"
+        android:layout_height="70dp"
+        android:contentDescription="@string/fill"
+        android:background="@color/materialcolorpicker__black"
+        android:onClick="onColorPick"/>
 </LinearLayout>

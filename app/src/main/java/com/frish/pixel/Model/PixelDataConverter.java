@@ -1,6 +1,7 @@
 package com.frish.pixel.Model;
 
 import android.graphics.Bitmap;
+import android.util.DisplayMetrics;
 
 import java.io.OutputStream;
 
@@ -12,26 +13,12 @@ public class PixelDataConverter {
     public static Bitmap convertToBitmap(PixelMatrix pixelMatrix) {
         int rows = pixelMatrix.getRows(); //height
         int columns = pixelMatrix.getColumns(); //width
-        Bitmap bitmap = Bitmap.createBitmap(columns, rows, Bitmap.Config.ARGB_8888);
-        for (int x = 0; x < columns; ++x) {
-            for (int y = 0; y < rows; ++y) {
-                bitmap.setPixel(x, y, pixelMatrix.getPixelColor(x, y));
-            }
-        }
-        return bitmap;
-    }
-
-    public static Bitmap convertToPreviewBitmap(PixelMatrix pixelMatrix) {
-        int MAX_ROWS = 256, MAX_COLUMNS = 256;
-
-        int rows = pixelMatrix.getRows(); //height
-        int columns = pixelMatrix.getColumns(); //width
-        Bitmap bitmap = Bitmap.createBitmap(columns, rows, Bitmap.Config.ARGB_8888);
-        for (int x = 0; x < columns; ++x) {
-            for (int y = 0; y < rows; ++y) {
-                bitmap.setPixel(x, y, pixelMatrix.getPixelColor(x, y));
-            }
-        }
+        Bitmap bitmap = Bitmap.createBitmap(pixelMatrix.getPixelsOneDimension(), columns, rows, Bitmap.Config.ARGB_8888);
+        //for (int x = 0; x < rows; ++x) {
+        //    for (int y = 0; y < columns; ++y) {
+        //        bitmap.setPixel(x, y, pixelMatrix.getPixelColor(x, y));
+        //    }
+        //}
         return bitmap;
     }
 

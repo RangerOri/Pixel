@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -95,14 +94,14 @@ public class GoogleDriveFragment extends Fragment implements
     public void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e(TAG, "onActivityResult");
+        LogData.print(TAG, "onActivityResult");
         if (requestCode == REQUEST_CODE_RESOLUTION && resultCode == Activity.RESULT_OK) {
             mGoogleApiClient.connect();
         }
 
         // For createFileActivity
         if (requestCode == REQUEST_CODE_CREATE_FILE_ACTIVITY) {
-            Log.e(TAG, "REQUEST_CODE_CREATE_FILE_ACTIVITY");
+            LogData.print(TAG, "REQUEST_CODE_CREATE_FILE_ACTIVITY");
             if (resultCode == Activity.RESULT_OK) {
                 DriveId driveId = data.getParcelableExtra(
                         OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
@@ -112,7 +111,7 @@ public class GoogleDriveFragment extends Fragment implements
 
         // For openFileActivity
         if (requestCode == REQUEST_CODE_OPEN_FILE_ACTIVITY) {
-            Log.e(TAG, "REQUEST_CODE_OPEN_FILE_ACTIVITY");
+            LogData.print(TAG, "REQUEST_CODE_OPEN_FILE_ACTIVITY");
             if (resultCode == Activity.RESULT_OK) {
                 DriveId driveId = data.getParcelableExtra(
                         OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
@@ -127,11 +126,11 @@ public class GoogleDriveFragment extends Fragment implements
     }
 
     public interface DriveIdCallback {
-        public void driveIdCallback(String driveId);
+        void driveIdCallback(String driveId);
     }
 
     public interface DriveContentsCallback {
-        public void driveContentsCallback(String driveId, String contents);
+        void driveContentsCallback(String driveId, String contents);
     }
 
     public void clearDefaultAccountAndReconnect() {
@@ -187,7 +186,7 @@ public class GoogleDriveFragment extends Fragment implements
      */
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        Log.i(TAG, "GoogleApiClient connection failed: " + result.toString());
+        LogData.printInfo(TAG, "GoogleApiClient connection failed: " + result.toString());
         if (!result.hasResolution()) {
             // show the localized error dialog.
             GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), getActivity(), 0).show();
@@ -196,7 +195,7 @@ public class GoogleDriveFragment extends Fragment implements
         try {
             result.startResolutionForResult(getActivity(), REQUEST_CODE_RESOLUTION);
         } catch (IntentSender.SendIntentException e) {
-            Log.e(TAG, "Exception while starting resolution activity", e);
+            LogData.print(TAG, "Exception while starting resolution activity", e);
         }
     }
 
@@ -221,13 +220,13 @@ public class GoogleDriveFragment extends Fragment implements
     private abstract class Action implements GoogleApiClient.ConnectionCallbacks {
         @Override
         public void onConnected(Bundle connectionHint) {
-            Log.i(TAG, "GoogleApiClient connected");
+            LogData.printInfo(TAG, "GoogleApiClient connected");
 
             if (mGoogleApiClient.isConnectionCallbacksRegistered(thisCallbacks())) {
-                Log.i(TAG, "Unregistered: " + thisCallbacks());
+                LogData.printInfo(TAG, "Unregistered: " + thisCallbacks());
                 mGoogleApiClient.unregisterConnectionCallbacks(thisCallbacks());
             } else {
-                Log.e(TAG, "Unregister was failed: " + thisCallbacks());
+                LogData.print(TAG, "Unregister was failed: " + thisCallbacks());
             }
 
             action();
@@ -235,7 +234,7 @@ public class GoogleDriveFragment extends Fragment implements
 
         @Override
         public void onConnectionSuspended(int cause) {
-            Log.i(TAG, "GoogleApiClient connection suspended");
+            LogData.printInfo(TAG, "GoogleApiClient connection suspended");
         }
 
         public void action() {
@@ -256,7 +255,7 @@ public class GoogleDriveFragment extends Fragment implements
                         }
                         showMessage("Created a file in Root Folder: "
                                 + result.getDriveFile().getDriveId());
-                        Log.i(TAG, "Created a file in Root Folder: "
+                        LogData.printInfo(TAG, "Created a file in Root Folder: "
                                 + result.getDriveFile().getDriveId());
                     }
                 };
@@ -303,7 +302,7 @@ public class GoogleDriveFragment extends Fragment implements
                             writer.write(mData);
                             writer.close();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            LogData.print(e);
                         }
 
                         Drive.DriveApi.getRootFolder(getGoogleApiClient())
@@ -349,7 +348,7 @@ public class GoogleDriveFragment extends Fragment implements
                             output.write(mData);
                             output.close();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            LogData.print(e);
                         }
                         // TODO: Same so far with SaveNewFile.
 
@@ -362,7 +361,7 @@ public class GoogleDriveFragment extends Fragment implements
                             getActivity().startIntentSenderForResult(
                                     intentSender, REQUEST_CODE_CREATE_FILE_ACTIVITY, null, 0, 0, 0);
                         } catch (IntentSender.SendIntentException e) {
-                            Log.w(TAG, "Failed sending intent.", e);
+                            LogData.printWarning(TAG, "Failed sending intent.", e);
                         }
                     }
                 };
@@ -389,7 +388,7 @@ public class GoogleDriveFragment extends Fragment implements
                 getActivity().startIntentSenderForResult(
                         intentSender, REQUEST_CODE_OPEN_FILE_ACTIVITY, null, 0, 0, 0);
             } catch (IntentSender.SendIntentException e) {
-                Log.w(TAG, "Failed sending intent.", e);
+                LogData.printWarning(TAG, "Failed sending intent.", e);
             }
         }
     }
@@ -425,7 +424,7 @@ public class GoogleDriveFragment extends Fragment implements
 
                         String contents = getContents(driveContentsResult.getDriveContents());
                         mCallback.driveContentsCallback(mDriveId, contents);
-                        Log.i(TAG, "Contents: " + contents);
+                        LogData.printInfo(TAG, "Contents: " + contents);
                     }
                 };
 
@@ -441,7 +440,7 @@ public class GoogleDriveFragment extends Fragment implements
                 }
                 contents = builder.toString();
             } catch (IOException e) {
-                Log.e(TAG, "IOException while reading from the stream", e);
+                LogData.print(TAG, "IOException while reading from the stream", e);
             }
 
             driveContents.discard(getGoogleApiClient());

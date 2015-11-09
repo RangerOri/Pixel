@@ -50,5 +50,21 @@ public class PixelMatrix implements Serializable{
         return mPixel[x][y];
     }
 
+    public int[] getPixelsOneDimension() {
+        int[] pixels = new int[getRows()*getColumns()];
+        for(int i = 0; i<getRows(); i++)
+            for (int j = 0; j < getColumns(); ++j) {
+                pixels[(i*getColumns())+j] = mPixel[i][j];
+            }
 
+        return pixels;
+    }
+
+    public int[][] getPixels() {
+        return mPixel;
+    }
+
+    public void setPixels(int[][] pixels) {
+        mPixel = pixels;
+    }
 }
